@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using StoreAppLib;
 using System;
 
@@ -17,6 +18,7 @@ namespace StoreAppAPI.Controllers
 
         [HttpGet("get")]
         [Produces("application/json")]
+        [EnableCors]
         public IActionResult GetAllCustomers() {
             try { return Ok(_customerActions.GetAllCustomers()); }
             catch (Exception) { return BadRequest(); }
@@ -24,6 +26,7 @@ namespace StoreAppAPI.Controllers
 
         [HttpGet("get/{email}")]
         [Produces("application/json")]
+        [EnableCors]
         public IActionResult GetCustomerByEmail(string email)
         {
             try { return Ok(_customerActions.GetCustomerByEmail(email)); }

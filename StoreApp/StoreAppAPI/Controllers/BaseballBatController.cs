@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoreAppDB.Models;
@@ -20,13 +21,14 @@ namespace StoreAppAPI.Controllers
         {
             _batActions = batActions;
         }
-        /// <summary>
-        /// Gets All BaseballBats
-        /// </summary>
+        ///   <remarks>
+        ///    This my Bats Controller That has two methdos Curentlyu
+        ///   </remarks>
+
 
         [HttpGet("get")]
         [Produces("application/json")]
-
+        [EnableCors]
         public IActionResult GetAllBats() {
 
 
@@ -38,7 +40,7 @@ namespace StoreAppAPI.Controllers
         }
         [HttpGet("get/{id}")]
         [Produces("application/json")]
-
+        [EnableCors("MyAllowSpecificOrigins")]
         public IActionResult GetBatById(int id)
         {
 
@@ -56,6 +58,7 @@ namespace StoreAppAPI.Controllers
         [HttpPost("add")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [EnableCors("MyAllowSpecificOrigins")]
         public IActionResult AddBaseballBat(BaseballBat bat)
         {
             try
@@ -71,6 +74,7 @@ namespace StoreAppAPI.Controllers
         [HttpPut("edit")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [EnableCors("MyAllowSpecificOrigins")]
         public IActionResult EditBaseballBat(BaseballBat bat) 
         {
             try
@@ -84,6 +88,7 @@ namespace StoreAppAPI.Controllers
         [HttpDelete("delete")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [EnableCors("MyAllowSpecificOrigins")]
         public IActionResult DeleteBaseballBat(BaseballBat bat)
         {
             try

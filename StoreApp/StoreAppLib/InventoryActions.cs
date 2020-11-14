@@ -5,8 +5,8 @@ using StoreAppDB.Interfaces;
 using StoreAppDB;
 namespace StoreAppLib
 {
-    public class InventoryActions
-    {   
+    public class InventoryActions : IInventoryActions
+    {
         private StoreAppContext context;
         private IInventoryRepoActions inventoryRepo;
 
@@ -16,18 +16,21 @@ namespace StoreAppLib
             this.inventoryRepo = inventoryRepo;
         }
 
-        public List<Inventory> GetInventoryByLocationId(int id) {
+        public List<Inventory> GetInventoryByLocationId(int id)
+        {
 
             return inventoryRepo.GetInventoryByLocationId(id);
 
         }
 
 
-        public void UpdateInventory(Inventory inventory) { 
-                inventoryRepo.UpdateInventoryQuantity(inventory);
+        public void UpdateInventory(Inventory inventory)
+        {
+            inventoryRepo.UpdateInventoryQuantity(inventory);
         }
 
-        public Inventory GetInventoryById(int id) {
+        public Inventory GetInventoryById(int id)
+        {
 
             return inventoryRepo.GetInventoryRecordByInventoryNumber(id);
 

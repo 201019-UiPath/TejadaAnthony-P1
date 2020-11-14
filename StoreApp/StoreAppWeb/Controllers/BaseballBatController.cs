@@ -10,6 +10,7 @@ namespace StoreAppWeb.Controllers
 {
     public class BaseballBatController : Controller
     {
+   
         IBaseballBatRepoActions _repo;
 
         public BaseballBatController(IBaseballBatRepoActions repo)

@@ -21,6 +21,8 @@ namespace StoreAppAPI
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,6 +33,17 @@ namespace StoreAppAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>{
+                options.AddPolicy(
+                    name: MyAllowSpecificOrigins,
+                        builder => {
+                            builder.WithOrigins("*")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                        }
+                    );
+            });
+
             services.AddControllers();
             services.AddDbContext<StoreAppContext>(options => options.UseNpgsql(Configuration.GetConnectionString("StoreAppDB")));
 
@@ -49,6 +62,9 @@ namespace StoreAppAPI
             services.AddScoped<IBaseballBatActions, BaseballBatActions>();
             services.AddScoped<IBaseballBatRepoActions, DBRepo>();
 
+            services.AddScoped<IInventoryActions, InventoryActions>();
+            services.AddScoped<IInventoryRepoActions, DBRepo>();
+
             services.AddSwaggerGen();
         }
 
@@ -59,28 +75,27 @@ namespace StoreAppAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
 
-               // var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-               // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-               /// c.IncludeXmlComments(xmlPath);
             });
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+    
 
         }
     }
