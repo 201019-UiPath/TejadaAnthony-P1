@@ -8,12 +8,13 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>View</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="~/css/login.css" />
 </head>
 <body>
     <div class="container">
-        <h2 class="text-center">Better Bats</h2>
-        <form asp-controller="Home" asp-action="Login" class="w-50 mt-5 mx-auto">
+        <h1 class="text-center mb-5 mt-5">Better Bats</h1>
+        <form asp-controller="Home" asp-action="Login" class="w-50 mt-5 mx-auto align-middle">
             <div class="form-group">
                 <label asp-for="Email">Email:</label>
                 <input type="email" class="form-control"  id="email" placeholder="Enter email" asp-for="Email">
@@ -23,10 +24,10 @@
                 <input type="password" class="form-control" id="pwd" placeholder="Enter password" asp-for="Password">
             </div>
             <div class="form-group">
-                <label asp-for="LocationId">Location</label>
-                <input type="number" class="form-control" id="Location"  asp-for="LocationId" min="1" max="2">
+                <label asp-for="Location">Location</label>
+                <input type="number" class="form-control" id="Location"  asp-for="Location" min="1" max="2">
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-secondary">Submit</button>
         </form>
     </div>
 </body>

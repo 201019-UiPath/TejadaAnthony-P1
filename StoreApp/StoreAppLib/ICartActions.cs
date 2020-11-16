@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StoreAppLib
 {
-    interface ICartActions
+   public  interface ICartActions
     {
         void AddCart(Cart cart);
         void UpdateCart(Cart cart);

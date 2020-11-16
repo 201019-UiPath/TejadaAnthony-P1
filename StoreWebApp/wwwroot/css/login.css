@@ -1,0 +1,11 @@
+﻿
+body {
+    height: 100vh;
+    background-image: linear-gradient(to bottom, #c23b3b, #c15571, #b17396, #a18da5, #a1a1a1);
+    color: white;
+}
+form {
+
+    margin-top: 300px;
+}
+

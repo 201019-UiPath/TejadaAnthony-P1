@@ -7,7 +7,7 @@ using System.Text;
 
 namespace StoreAppLib
 {
-    class OrderItemActions : IOrderItemActions
+   public  class OrderItemActions : IOrderItemActions
     {
        public IOrderItemRepoActions repoActions;
 

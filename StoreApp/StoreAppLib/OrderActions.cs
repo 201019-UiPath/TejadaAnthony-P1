@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace StoreAppLib
 {
-    public class OrderActions
+    public class OrderActions : IOrderActions
     {
-        
+
         private StoreAppContext context;
         private IOrderRepoActions orderRepo;
 
@@ -17,7 +17,8 @@ namespace StoreAppLib
             this.orderRepo = orderRepo;
         }
 
-        public void AddNewOrder(Order order) {
+        public void AddNewOrder(Order order)
+        {
 
             orderRepo.AddOrderToTable(order);
 
@@ -25,7 +26,7 @@ namespace StoreAppLib
 
         public List<Order> GetOrdersByLocationId(int locationId)
         {
-           return orderRepo.GetOrdersByLocationId(locationId);
+            return orderRepo.GetOrdersByLocationId(locationId);
         }
 
         public List<Order> GetOrdersByCustomerId(int cusId)
@@ -33,5 +34,14 @@ namespace StoreAppLib
             return orderRepo.GetOrdersByCustomerId(cusId);
         }
 
+        public Order GetOrderByDate(string date)
+        {
+            return orderRepo.GetOrderByDate(date);
+        }
+
+        public List<Order> GetAllOrders()
+        {
+            return orderRepo.GetAllOrders();
+        }
     }
 }

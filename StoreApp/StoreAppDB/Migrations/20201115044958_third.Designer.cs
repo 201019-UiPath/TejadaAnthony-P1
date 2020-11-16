@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StoreAppDB;
@@ -9,9 +10,10 @@ using StoreAppDB;
 namespace StoreAppDB.Migrations
 {
     [DbContext(typeof(StoreAppContext))]
-    partial class StoreAppContextModelSnapshot : ModelSnapshot
+    [Migration("20201115044958_third")]
+    partial class third
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,7 +98,7 @@ namespace StoreAppDB.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<int>("Location")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -106,6 +108,8 @@ namespace StoreAppDB.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("CustomerId");
+
+                    b.HasIndex("LocationId");
 
                     b.ToTable("Customers");
                 });
@@ -192,8 +196,8 @@ namespace StoreAppDB.Migrations
                     b.Property<string>("OrderDate")
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("numeric");
+                    b.Property<int>("Total")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -251,6 +255,13 @@ namespace StoreAppDB.Migrations
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("StoreAppDB.Models.Customer", b =>
+                {
+                    b.HasOne("StoreAppDB.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
                 });
 
             modelBuilder.Entity("StoreAppDB.Models.Inventory", b =>

@@ -37,7 +37,7 @@ namespace StoreWebApp.Controllers
         public IActionResult Login(Customer cusModel)
         {
             var invModel = new Inventory();
-            invModel.LocationId = cusModel.LocationId;
+            invModel.LocationId = cusModel.Location;
             HttpContext.Session.SetObject("Inventory", invModel);
 
             if (ModelState.IsValid) 
@@ -59,6 +59,7 @@ namespace StoreWebApp.Controllers
 
                         if (checkedUser.Email==cusModel.Email && checkedUser.Password == cusModel.Password) 
                         {
+                            checkedUser.cart = new Cart();
                             HttpContext.Session.SetObject("Customer", checkedUser);
 
                             return RedirectToAction("GetInventoryByLocationId", "Customer");
@@ -70,6 +71,7 @@ namespace StoreWebApp.Controllers
                         }
                     }
                 }
+
 
             }
 

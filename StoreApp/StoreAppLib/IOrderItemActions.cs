@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StoreAppLib
 {
-    interface IOrderItemActions
+    public interface IOrderItemActions
     {
         void AddOrderItem(OrderItem OrderItem);
         void UpdateOrderItem(OrderItem OrderItem);

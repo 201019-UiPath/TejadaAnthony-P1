@@ -3,15 +3,16 @@ using System.Data.SqlTypes;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
+using StoreWebApp.Models;
 
-namespace StoreAppDB.Models
+namespace StoreWebApp.Models
 {
     public class Order
     {
        
-        [Key]
+     
         public int  Id { get; set; } //Primary key
-        public string OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }
 
         public Location Location { get; set; }
         public int LocationId{get; set; }

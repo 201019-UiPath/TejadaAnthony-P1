@@ -65,6 +65,18 @@ namespace StoreAppAPI
             services.AddScoped<IInventoryActions, InventoryActions>();
             services.AddScoped<IInventoryRepoActions, DBRepo>();
 
+            services.AddScoped<ICartItemActions, CartItemActions>();
+            services.AddScoped<ICartItemRepoActions, DBRepo>();
+
+            services.AddScoped<ICartActions, CartActions>();
+            services.AddScoped<ICartRepoActions, DBRepo>();
+
+            services.AddScoped<IOrderActions, OrderActions>();
+            services.AddScoped<IOrderRepoActions, DBRepo>();
+
+            services.AddScoped<IOrderItemActions, OrderItemActions>();
+            services.AddScoped<IOrderItemRepoActions, DBRepo>();
+
             services.AddSwaggerGen();
         }
 

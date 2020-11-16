@@ -6,7 +6,7 @@ using System.Text;
 
 namespace StoreAppLib
 {
-    class CartItemActions : ICartItemActions
+    public class CartItemActions : ICartItemActions
     {
         private ICartItemRepoActions repoActions;
 

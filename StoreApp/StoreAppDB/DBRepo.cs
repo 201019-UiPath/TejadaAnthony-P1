@@ -17,6 +17,7 @@ namespace StoreAppDB
         }
         //BaseballBat
 
+
         public void AddBaseballBatIntoTableAsync(BaseballBat baseballbat)
         {
             context.BaseballBats.Add(baseballbat);
@@ -81,7 +82,7 @@ namespace StoreAppDB
 
         public Customer GetCustomerByEmail(string email)
         {
-            var result = context.Customers.SingleOrDefault(d => d.Email == email);
+            var result = context.Customers.Include("cart").SingleOrDefault(d => d.Email == email);
 
             return result;
         }
@@ -108,7 +109,7 @@ namespace StoreAppDB
         }
         public List<Inventory> GetInventoryByLocationId(int id)
         {
-            return context.Inventory.Select(x => x).Where(x => x.LocationId==id).ToList();
+            return context.Inventory.Select(x => x).Where(x => x.LocationId==id).Include("BaseballBats").ToList();
         }
         public Inventory GetInventoryRecordByInventoryNumber(int id)
         {
@@ -116,6 +117,14 @@ namespace StoreAppDB
              
         }
         //orders
+        public List<Order> GetAllOrders()
+        {
+            return context.Orders.Select(x => x).ToList();
+        }
+        public Order GetOrderByDate(string date) 
+        {
+            return context.Orders.SingleOrDefault(x => x.OrderDate == date);
+        }
         public void AddOrderToTable(Order order)
         {
             context.Orders.Add(order);

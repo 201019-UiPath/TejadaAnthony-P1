@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StoreAppDB;
@@ -9,9 +10,10 @@ using StoreAppDB;
 namespace StoreAppDB.Migrations
 {
     [DbContext(typeof(StoreAppContext))]
-    partial class StoreAppContextModelSnapshot : ModelSnapshot
+    [Migration("20201115052838_fourth")]
+    partial class fourth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,8 +194,8 @@ namespace StoreAppDB.Migrations
                     b.Property<string>("OrderDate")
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("numeric");
+                    b.Property<int>("Total")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

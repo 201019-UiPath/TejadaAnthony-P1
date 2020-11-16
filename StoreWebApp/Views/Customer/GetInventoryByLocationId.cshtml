@@ -2,6 +2,7 @@
 
 @{
     Layout = "_Layout";
+
 }
 
 <!DOCTYPE html>
@@ -12,24 +13,23 @@
     <title>View</title>
 </head>
 <body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.InventoryId)
+                @Html.DisplayNameFor(model => model.BaseballBatsId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BaseballBatsId)
+                @Html.DisplayNameFor(model => model.BaseballBats.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseballBats.ProductPrice)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LocationId)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -37,21 +37,19 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.InventoryId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.BaseballBatsId)
             </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.BaseballBats.ProductName)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.BaseballBats.ProductPrice)
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LocationId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <button class="btn btn-secondary text-white float-right" onclick="location.href='@Url.Action("AddCartItem", "Customer", new { BaseballBatId = item.BaseballBatsId, quantity = 1.0 })'">Add to Cart</button>
             </td>
         </tr>
 }
