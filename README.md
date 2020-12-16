@@ -35,8 +35,7 @@ to connect to a PostgreSQL database, ASP.NET Core API to create a RESTful API, a
 2. Install EF Core 
 3. Install PostgreSQL
 4. Create Elephant SQL Server
-5. ```Git clone
-    ```
+5. Git clone 
 6. Create appsettings.json and set PostgreSQL credentials 
 
 ## Usage
