@@ -35,11 +35,13 @@ to connect to a PostgreSQL database, ASP.NET Core API to create a RESTful API, a
 2. Install EF Core 
 3. Install PostgreSQL
 4. Create Elephant SQL Server
-5. Git clone 
+5. `Git clone https://github.com/201019-UiPath/TejadaAnthony-P1.git `
 6. Create appsettings.json and set PostgreSQL credentials 
 
 ## Usage
-Here, you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
+1. After installing the necessary tech stack and setting up the server credentials in your appsetting.json run the following in the StoreApp DB project directory from the command line: ```Dotnet ef dbcontext scaffold -c <connection-string-in-quotes> Npgsql.EntityFrameworkCore.PostgreSQL --startup-project <path to project folder> --force --output-dir Entities```
+2. To start using run StoreApp project first which is the API. Then run StoreAppWeb project. 
+3. Navigate to your localhost:<PORTNUMBER>/home/login
 
 ## License
-This project uses the following license: <MIT>.
+This project uses the following license: [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
