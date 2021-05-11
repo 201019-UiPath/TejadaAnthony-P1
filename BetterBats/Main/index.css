@@ -1,0 +1,40 @@
+html,
+body {
+    height: 100%;
+    width: auto;
+}
+
+body {
+    background-repeat: no-repeat;
+    background-image: url("../Images/bkgd1.jpg");
+    background-size: cover;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+form {
+    background-color: azure;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #54796d;
+    border-color: #000000;
+}
+
+.form-check {
+    position: relative;
+    display: block;
+    padding-left: 2.75rem;
+}
+
+.btn {
+    margin: 1.75rem auto;
+    display: block;
+}
+
+.logo-img {
+    width: 50%;
+    margin: 6rem auto;
+}

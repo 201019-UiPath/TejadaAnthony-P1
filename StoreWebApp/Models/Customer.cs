@@ -13,7 +13,7 @@ namespace StoreWebApp.Models
         {
             cart = new Cart();
         }
-
+        public int Id { get; set; }
         public string Name { get; set; }
         [Required]
         public string Email { get; set; }

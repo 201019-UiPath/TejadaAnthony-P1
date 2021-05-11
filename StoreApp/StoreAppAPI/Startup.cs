@@ -47,34 +47,28 @@ namespace StoreAppAPI
             services.AddControllers();
             services.AddDbContext<StoreAppContext>(options => options.UseNpgsql(Configuration.GetConnectionString("StoreAppDB")));
 
-            services.AddScoped<IBaseballBatActions, BaseballBatActions>();
-            services.AddScoped<IBaseballBatRepoActions, DBRepo>();
-
-            services.AddScoped<IManagerActions, ManagerActions>();
-            services.AddScoped<IManagerRepoActions, DBRepo>();
-
-            services.AddScoped<ILocationActions, LocationActions>();
+            services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<ILocationRepoActions, DBRepo>();
 
-            services.AddScoped<ICustomerActions, CustomerActions>();
-            services.AddScoped<ICustomerRepoActions, DBRepo>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepoActions, DBRepo>();
 
-            services.AddScoped<IBaseballBatActions, BaseballBatActions>();
-            services.AddScoped<IBaseballBatRepoActions, DBRepo>();
+            services.AddScoped<IBatService, BatService>();
+            services.AddScoped<IBatRepoActions, DBRepo>();
 
-            services.AddScoped<IInventoryActions, InventoryActions>();
+            services.AddScoped<IInventoryService, InventoryService>();
             services.AddScoped<IInventoryRepoActions, DBRepo>();
 
-            services.AddScoped<ICartItemActions, CartItemActions>();
+            services.AddScoped<ICartItemService, CartItemService>();
             services.AddScoped<ICartItemRepoActions, DBRepo>();
 
-            services.AddScoped<ICartActions, CartActions>();
+            services.AddScoped<ICartService, CartService>();
             services.AddScoped<ICartRepoActions, DBRepo>();
 
-            services.AddScoped<IOrderActions, OrderActions>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IOrderRepoActions, DBRepo>();
 
-            services.AddScoped<IOrderItemActions, OrderItemActions>();
+            services.AddScoped<IOrderItemService, OrderItemService>();
             services.AddScoped<IOrderItemRepoActions, DBRepo>();
 
             services.AddSwaggerGen();

@@ -8,17 +8,14 @@ namespace StoreAppDB.Models
 {
     public class Order
     {
-       
-        [Key]
-        public int  Id { get; set; } //Primary key
-        public string OrderDate { get; set; }
 
-        public Location Location { get; set; }
-        public int LocationId{get; set; }
-
-        public Customer Customer { get; set; }
-        public int CustomerId{get; set; }
-        public decimal Total { get; set; }
-        public List<OrderItem> OrderItem { get; set; }
+        public int id { get; set; }
+        public int userId { get; set; }
+        public User user { get; set; }
+        public int locationId { get; set; }
+        public Location location { get; set; }
+        public DateTime orderDate { get; set; }
+        public double totalPrice { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
     }
 }

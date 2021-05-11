@@ -1,0 +1,34 @@
+#smallLogo {
+    margin-left: 2rem;
+}
+
+#navbarNavAltMarkup {
+    justify-content: flex-end;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #54796d;
+    font-size: 125%;
+    font-weight: bold;
+}
+
+.signoutlink {
+    margin-left: 10rem;
+    margin-right: 2rem;
+}
+
+h2 {
+    font-family: 'Graduate', sans-serif;
+}
+
+.table {
+    background-color: #54796d;
+}
+
+.form-group{
+
+    
+    font-weight: bold;
+    
+}
+

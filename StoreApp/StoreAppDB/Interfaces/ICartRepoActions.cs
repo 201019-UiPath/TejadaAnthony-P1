@@ -10,7 +10,7 @@ namespace StoreAppDB.Interfaces
         void AddCart(Cart cart);
         void UpdateCart(Cart cart);
         Cart GetCartById(int id );
-        Cart GetCartByCustomerId(int id);
+        Cart GetCartByUserId(int id);
         void DeleteCart(Cart cart);
 
     }

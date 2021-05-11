@@ -7,10 +7,9 @@ namespace StoreAppDB.Models
     public class Cart
     {
 
-        public int Id { get; set; }
-        public int CustomerId { get; set; }
-        public Customer Customer{get; set;}
-        public int Total { get; set; }
-        public List<CartItem> CartItem { get; set; }
+        public int id { get; set; }
+        public int userId { get; set; }
+        public User user{get; set;}
+        public List<CartItem> CartItems { get; set; }
     }
 }

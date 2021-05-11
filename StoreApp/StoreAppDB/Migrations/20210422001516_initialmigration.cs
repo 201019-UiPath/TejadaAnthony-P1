@@ -1,0 +1,274 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+
+namespace StoreAppDB.Migrations
+{
+    public partial class initialmigration : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Bats",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    product = table.Column<string>(nullable: true),
+                    price = table.Column<float>(nullable: false),
+                    description = table.Column<string>(nullable: true),
+                    type = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bats", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    street = table.Column<string>(nullable: true),
+                    city = table.Column<string>(nullable: true),
+                    state = table.Column<string>(nullable: true),
+                    postalCode = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Inventories",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    batId = table.Column<int>(nullable: false),
+                    quantity = table.Column<int>(nullable: false),
+                    locationId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Inventories", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Inventories_Bats_batId",
+                        column: x => x.batId,
+                        principalTable: "Bats",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Inventories_Locations_locationId",
+                        column: x => x.locationId,
+                        principalTable: "Locations",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(nullable: true),
+                    email = table.Column<string>(nullable: true),
+                    password = table.Column<string>(nullable: true),
+                    type = table.Column<string>(nullable: false),
+                    locationId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Users_Locations_locationId",
+                        column: x => x.locationId,
+                        principalTable: "Locations",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Carts",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    userId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carts", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Carts_Users_userId",
+                        column: x => x.userId,
+                        principalTable: "Users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    userId = table.Column<int>(nullable: false),
+                    locationId = table.Column<int>(nullable: false),
+                    orderDate = table.Column<DateTime>(nullable: false),
+                    totalPrice = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Locations_locationId",
+                        column: x => x.locationId,
+                        principalTable: "Locations",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Users_userId",
+                        column: x => x.userId,
+                        principalTable: "Users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CartItems",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    cartId = table.Column<int>(nullable: false),
+                    batId = table.Column<int>(nullable: false),
+                    quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartItems", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Bats_batId",
+                        column: x => x.batId,
+                        principalTable: "Bats",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Carts_cartId",
+                        column: x => x.cartId,
+                        principalTable: "Carts",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderItems",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    orderId = table.Column<int>(nullable: false),
+                    batId = table.Column<int>(nullable: false),
+                    price = table.Column<double>(nullable: false),
+                    quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItems", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Bats_batId",
+                        column: x => x.batId,
+                        principalTable: "Bats",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_orderId",
+                        column: x => x.orderId,
+                        principalTable: "Orders",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartItems_batId",
+                table: "CartItems",
+                column: "batId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartItems_cartId",
+                table: "CartItems",
+                column: "cartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Carts_userId",
+                table: "Carts",
+                column: "userId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Inventories_batId",
+                table: "Inventories",
+                column: "batId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Inventories_locationId",
+                table: "Inventories",
+                column: "locationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_batId",
+                table: "OrderItems",
+                column: "batId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_orderId",
+                table: "OrderItems",
+                column: "orderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_locationId",
+                table: "Orders",
+                column: "locationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_userId",
+                table: "Orders",
+                column: "userId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_locationId",
+                table: "Users",
+                column: "locationId");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "CartItems");
+
+            migrationBuilder.DropTable(
+                name: "Inventories");
+
+            migrationBuilder.DropTable(
+                name: "OrderItems");
+
+            migrationBuilder.DropTable(
+                name: "Carts");
+
+            migrationBuilder.DropTable(
+                name: "Bats");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
+        }
+    }
+}

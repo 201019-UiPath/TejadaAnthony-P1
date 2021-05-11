@@ -23,12 +23,16 @@ namespace StoreWebApp.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+            var location = HttpContext.Session.GetObject<Inventory>("Inventory");
 
+
+            
             Order order = new Order();
+            order.LocationId = location.LocationId;
             order.Total = cart.Total;
             order.OrderDate = DateTime.Now;
             NpgsqlDateTime npgsqlDateTime = order.OrderDate;
-            order.CustomerId = cart.CustomerId;
+            order.CustomerId = customer.Id;
 
             using (var client = new HttpClient()) 
             {

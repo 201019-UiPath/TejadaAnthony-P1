@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoreAppDB.Models;
@@ -9,30 +10,79 @@ using StoreAppLib;
 
 namespace StoreAppAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class OrderItemController : ControllerBase
     {
 
-        private readonly IOrderItemActions _orderItemActions;
+        private readonly IOrderItemService orderItemService;
 
-        public OrderItemController(IOrderItemActions orderItemActions)
+        public OrderItemController(IOrderItemService orderItemService)
         {
-            _orderItemActions = orderItemActions;
+            this.orderItemService = orderItemService;
         }
 
         [HttpPost("add")]
-        [Produces("application/json")]
         [Consumes("application/json")]
-        public IActionResult AddOrderItem(OrderItem orderItem)
+        [Produces("application/json")]
+        public IActionResult AddLineItem(OrderItem item)
         {
-
             try
             {
-                _orderItemActions.AddOrderItem(orderItem);
-                return CreatedAtAction("AddOrderItem", orderItem);
+                orderItemService.AddOrderItem(item);
+                return CreatedAtAction("AddOrderItem", item);
             }
-            catch (Exception) { return BadRequest(); }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("edit")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public IActionResult UpdateOrderItem(OrderItem item)
+        {
+            try
+            {
+                orderItemService.UpdateOrderItem(item);
+                return CreatedAtAction("UpdateOrderItem", item);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("delete")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public IActionResult DeleteOrderItem(OrderItem item)
+        {
+            try
+            {
+                orderItemService.DeleteOrderItem(item);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("get/{orderId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetAllOrderItemsByOrderId(int orderId)
+        {
+            try
+            {
+                return Ok(orderItemService.GetAllOrderItemsByOrderId(orderId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

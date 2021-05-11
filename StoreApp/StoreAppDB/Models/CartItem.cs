@@ -6,11 +6,11 @@ namespace StoreAppDB.Models
 {
     public class CartItem
     {
-        public int Id { get; set; }
-        public int CartId { get; set; }
+        public int id { get; set; }
+        public int cartId { get; set; }
         public Cart Cart { get; set; }
-        public int BaseballBatId { get; set; }
-        public BaseballBat BaseballBat { get; set; }
-        public int Quantity { get; set; }
+        public int batId { get; set; }
+        public Bat bat { get; set; }
+        public int quantity { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace StoreWebApp.Models
         public Cart()
         {
             CartItem = new List<CartItem>();
+
         }
 
         public int Id { get; set; }

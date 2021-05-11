@@ -9,40 +9,93 @@ using StoreAppLib;
 
 namespace StoreAppAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class LocationController : ControllerBase
     {
-        private readonly ILocationActions _locationActions;
+        private readonly ILocationService locationService;
 
-        public LocationController(ILocationActions locationActions)
+        public LocationController(ILocationService locationService)
         {
-            _locationActions = locationActions;
+            this.locationService = locationService;
+        }
+
+        [HttpPost("add")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public IActionResult AddLocation(Location location)
+        {
+            try
+            {
+                locationService.AddLocation(location);
+                return CreatedAtAction("AddLocation", location);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("edit")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public IActionResult UpdateLocation(Location location)
+        {
+            try
+            {
+                locationService.UpdateLocation(location);
+                return CreatedAtAction("UpdateLocation", location);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("delete")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public IActionResult DeleteLocation(Location location)
+        {
+            try
+            {
+                locationService.DeleteLocation(location);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("get")]
+        [Consumes("application/json")]
         [Produces("application/json")]
-        public IActionResult GetAllLocations() {
-
-            try {
-
-                return Ok(_locationActions.GetAllLocations()); 
-                
-
+        public IActionResult GetAllLocations()
+        {
+            try
+            {
+                return Ok(locationService.GetAllLocations());
             }
-            catch (Exception) { return BadRequest(); }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpGet("get/{id}")]
+        [Consumes("application/json")]
         [Produces("application/json")]
         public IActionResult GetLocationById(int id)
         {
-
-            try {
-                return Ok(_locationActions.GetLocationById(id)); 
-              
+            try
+            {
+                return Ok(locationService.GetLocationById(id));
             }
-            catch (Exception) { return BadRequest(); }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

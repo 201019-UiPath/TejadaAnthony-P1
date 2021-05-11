@@ -7,78 +7,241 @@ using Microsoft.AspNetCore.Mvc;
 using StoreAppDB;
 using StoreAppLib;
 using StoreAppDB.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace StoreAppAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IOrderActions _orderActions;
+        private readonly IOrderService orderService;
 
-        public OrderController(IOrderActions orderActions)
+        public OrderController(IOrderService orderService)
         {
-            _orderActions = orderActions;
-        }
-
-        [HttpGet("get")]
-        [Produces("application/json")]
-        public IActionResult GetAllOrders()
-        {
-            try
-            {
-                return Ok(_orderActions.GetAllOrders());
-            }
-            catch (Exception) { return BadRequest(); }
-
-        }
-
-        [HttpGet("get/{id}")]
-        [Produces("application/json")]
-        public IActionResult GetOrdersByCustomerId(int id) {
-
-            try
-            {
-                return Ok(_orderActions.GetOrdersByCustomerId(id));
-            }
-            catch(Exception) { return BadRequest(); }
-        }
-
-        [HttpGet("get/{date}")]
-        [Produces("application/json")]
-        public IActionResult GetOrderByDate(string date)
-        {
-
-            try
-            {
-                return Ok(_orderActions.GetOrderByDate(date));
-            }
-            catch (Exception) { return BadRequest(); }
-        }
-        [HttpGet("get/{locId}")]
-        [Produces("application/json")]
-        public IActionResult GetOrdersByLocationId(int locId)
-        {
-
-            try
-            {
-                return Ok(_orderActions.GetOrdersByLocationId(locId));
-            }
-            catch (Exception) { return BadRequest(); }
+            this.orderService = orderService;
         }
 
         [HttpPost("add")]
-        [Produces("application/json")]
         [Consumes("application/json")]
+        [Produces("application/json")]
         public IActionResult AddOrder(Order order)
         {
-
             try
             {
-                _orderActions.AddNewOrder(order);
+                orderService.AddOrder(order);
                 return CreatedAtAction("AddOrder", order);
             }
-            catch (Exception) { return BadRequest(); }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("edit")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public IActionResult UpdateOrder(Order order)
+        {
+            try
+            {
+                orderService.UpdateOrder(order);
+                return CreatedAtAction("UpdateOrder", order);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("delete")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public IActionResult DeleteOrder(Order order)
+        {
+            try
+            {
+                orderService.DeleteOrder(order);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+
+
+
+        [HttpGet("get/{orderId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetOrderById(int orderId)
+        {
+            try
+            {
+                return Ok(orderService.GetOrderById(orderId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("get/location/{locationId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetAllOrdersByLocationId(int locationId)
+        {
+            try
+            {
+                return Ok(orderService.GetAllOrdersByLocationId(locationId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("get/user/{userId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetAllOrdersByUserId(int userId)
+        {
+            try
+            {
+                return Ok(orderService.GetAllOrdersByUserId(userId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+
+
+
+        [HttpGet("get/user/date/asc/{userId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetAllOrdersByUserIdDateAsc(int userId)
+        {
+            try
+            {
+                return Ok(orderService.GetAllOrdersByUserIdDateAsc(userId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("get/user/date/desc/{userId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetAllOrdersByUserIdDateDesc(int userId)
+        {
+            try
+            {
+                return Ok(orderService.GetAllOrdersByUserIdDateDesc(userId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("get/user/price/asc/{userId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetAllOrdersByUserIdPriceAsc(int userId)
+        {
+            try
+            {
+                return Ok(orderService.GetAllOrdersByUserIdPriceAsc(userId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("get/user/price/desc/{userId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetAllOrdersByUserIdPriceDesc(int userId)
+        {
+            try
+            {
+                return Ok(orderService.GetAllOrdersByUserIdPriceDesc(userId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+
+
+
+        [HttpGet("get/location/date/asc/{locationId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetAllOrdersByLocationIdDateAsc(int locationId)
+        {
+            try
+            {
+                return Ok(orderService.GetAllOrdersByLocationIdDateAsc(locationId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("get/location/date/desc/{locationId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetAllOrdersByLocationIdDateDesc(int locationId)
+        {
+            try
+            {
+                return Ok(orderService.GetAllOrdersByLocationIdDateDesc(locationId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("get/location/price/asc/{locationId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetAllOrdersByLocationIdPriceAsc(int locationId)
+        {
+            try
+            {
+                return Ok(orderService.GetAllOrdersByLocationIdPriceAsc(locationId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("get/location/price/desc/{locationId}")]
+        [Produces("application/json")]
+        [EnableCors("_myAllowSpecificOrigins")]
+        public IActionResult GetAllOrdersByLocationIdPriceDesc(int locationId)
+        {
+            try
+            {
+                return Ok(orderService.GetAllOrdersByLocationIdPriceDesc(locationId));
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

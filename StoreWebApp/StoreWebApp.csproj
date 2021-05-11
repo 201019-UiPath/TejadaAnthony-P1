@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="StoreWebApp.sln" />
+    <None Include="Views\Home\Login.cshtml" />
+    <None Include="Views\Home\Signup.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="Npgsql" Version="5.0.0" />

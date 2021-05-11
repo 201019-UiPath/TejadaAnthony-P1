@@ -19,43 +19,44 @@ namespace StoreAppDB.Migrations
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("StoreAppDB.Models.BaseballBat", b =>
+            modelBuilder.Entity("StoreAppDB.Models.Bat", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("ProductName")
+                    b.Property<string>("description")
                         .HasColumnType("text");
 
-                    b.Property<float>("ProductPrice")
+                    b.Property<float>("price")
                         .HasColumnType("real");
 
-                    b.Property<string>("ProductType")
+                    b.Property<string>("product")
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.ToTable("BaseballBats");
+                    b.HasKey("id");
+
+                    b.ToTable("Bats");
                 });
 
             modelBuilder.Entity("StoreAppDB.Models.Cart", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("userId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Total")
-                        .HasColumnType("integer");
+                    b.HasKey("id");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId")
+                    b.HasIndex("userId")
                         .IsUnique();
 
                     b.ToTable("Carts");
@@ -63,244 +64,241 @@ namespace StoreAppDB.Migrations
 
             modelBuilder.Entity("StoreAppDB.Models.CartItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("BaseballBatId")
+                    b.Property<int>("batId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("CartId")
+                    b.Property<int>("cartId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int>("quantity")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.HasIndex("BaseballBatId");
+                    b.HasIndex("batId");
 
-                    b.HasIndex("CartId");
+                    b.HasIndex("cartId");
 
                     b.ToTable("CartItems");
                 });
 
-            modelBuilder.Entity("StoreAppDB.Models.Customer", b =>
-                {
-                    b.Property<int>("CustomerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Location")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("text");
-
-                    b.HasKey("CustomerId");
-
-                    b.ToTable("Customers");
-                });
-
             modelBuilder.Entity("StoreAppDB.Models.Inventory", b =>
                 {
-                    b.Property<int>("InventoryId")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("BaseballBatsId")
+                    b.Property<int>("batId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int>("locationId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int>("quantity")
                         .HasColumnType("integer");
 
-                    b.HasKey("InventoryId");
+                    b.HasKey("id");
 
-                    b.HasIndex("BaseballBatsId");
+                    b.HasIndex("batId");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("locationId");
 
-                    b.ToTable("Inventory");
+                    b.ToTable("Inventories");
                 });
 
             modelBuilder.Entity("StoreAppDB.Models.Location", b =>
                 {
-                    b.Property<int>("LocationId")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("LocationName")
+                    b.Property<string>("city")
                         .HasColumnType("text");
 
-                    b.Property<int?>("ManagerId")
-                        .HasColumnType("integer");
+                    b.Property<string>("name")
+                        .HasColumnType("text");
 
-                    b.HasKey("LocationId");
+                    b.Property<string>("postalCode")
+                        .HasColumnType("text");
 
-                    b.HasIndex("ManagerId");
+                    b.Property<string>("state")
+                        .HasColumnType("text");
+
+                    b.Property<string>("street")
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
 
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("StoreAppDB.Models.Manager", b =>
-                {
-                    b.Property<int>("ManagerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("password")
-                        .HasColumnType("text");
-
-                    b.HasKey("ManagerId");
-
-                    b.ToTable("Managers");
-                });
-
             modelBuilder.Entity("StoreAppDB.Models.Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("locationId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("LocationId")
+                    b.Property<DateTime>("orderDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<double>("totalPrice")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("userId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("OrderDate")
-                        .HasColumnType("text");
+                    b.HasKey("id");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("numeric");
+                    b.HasIndex("locationId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("LocationId");
+                    b.HasIndex("userId");
 
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("StoreAppDB.Models.OrderItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("BaseballBatId")
+                    b.Property<int>("batId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int>("orderId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Quantity")
+                    b.Property<double>("price")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("quantity")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.HasIndex("BaseballBatId");
+                    b.HasIndex("batId");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("orderId");
 
                     b.ToTable("OrderItems");
                 });
 
+            modelBuilder.Entity("StoreAppDB.Models.User", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("email")
+                        .HasColumnType("text");
+
+                    b.Property<int>("locationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("locationId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("StoreAppDB.Models.Cart", b =>
                 {
-                    b.HasOne("StoreAppDB.Models.Customer", "Customer")
+                    b.HasOne("StoreAppDB.Models.User", "user")
                         .WithOne("cart")
-                        .HasForeignKey("StoreAppDB.Models.Cart", "CustomerId")
+                        .HasForeignKey("StoreAppDB.Models.Cart", "userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("StoreAppDB.Models.CartItem", b =>
                 {
-                    b.HasOne("StoreAppDB.Models.BaseballBat", "BaseballBat")
+                    b.HasOne("StoreAppDB.Models.Bat", "bat")
                         .WithMany()
-                        .HasForeignKey("BaseballBatId")
+                        .HasForeignKey("batId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StoreAppDB.Models.Cart", "Cart")
-                        .WithMany("CartItem")
-                        .HasForeignKey("CartId")
+                        .WithMany("CartItems")
+                        .HasForeignKey("cartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("StoreAppDB.Models.Inventory", b =>
                 {
-                    b.HasOne("StoreAppDB.Models.BaseballBat", "BaseballBats")
+                    b.HasOne("StoreAppDB.Models.Bat", "bats")
                         .WithMany()
-                        .HasForeignKey("BaseballBatsId")
+                        .HasForeignKey("batId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StoreAppDB.Models.Location", "Location")
                         .WithMany("Inventory")
-                        .HasForeignKey("LocationId")
+                        .HasForeignKey("locationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("StoreAppDB.Models.Location", b =>
-                {
-                    b.HasOne("StoreAppDB.Models.Manager", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerId");
                 });
 
             modelBuilder.Entity("StoreAppDB.Models.Order", b =>
                 {
-                    b.HasOne("StoreAppDB.Models.Customer", "Customer")
-                        .WithMany("order")
-                        .HasForeignKey("CustomerId")
+                    b.HasOne("StoreAppDB.Models.Location", "location")
+                        .WithMany()
+                        .HasForeignKey("locationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StoreAppDB.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
+                    b.HasOne("StoreAppDB.Models.User", "user")
+                        .WithMany("orders")
+                        .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("StoreAppDB.Models.OrderItem", b =>
                 {
-                    b.HasOne("StoreAppDB.Models.BaseballBat", "BaseballBat")
+                    b.HasOne("StoreAppDB.Models.Bat", "bat")
                         .WithMany()
-                        .HasForeignKey("BaseballBatId")
+                        .HasForeignKey("batId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StoreAppDB.Models.Order", "Order")
-                        .WithMany("OrderItem")
-                        .HasForeignKey("OrderId")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("orderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("StoreAppDB.Models.User", b =>
+                {
+                    b.HasOne("StoreAppDB.Models.Location", "location")
+                        .WithMany()
+                        .HasForeignKey("locationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

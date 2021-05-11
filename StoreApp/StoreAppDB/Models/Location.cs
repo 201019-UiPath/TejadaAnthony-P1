@@ -4,9 +4,12 @@ namespace StoreAppDB.Models
 {
     public class Location
     {
-        public int LocationId { get; set; } //primary key
-        public string LocationName { get; set; }
-        public Manager Manager{ get; set; } //foreign key
+        public int id { get; set; } //primary key
+        public string name { get; set; }
+        public string street { get; set; }
+        public string city { get; set; }
+        public string state { get; set; }
+        public string postalCode { get; set; }
         public List<Inventory> Inventory { get; set; }
 
 

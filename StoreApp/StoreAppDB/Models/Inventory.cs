@@ -3,11 +3,11 @@ namespace StoreAppDB.Models
 {
     public class Inventory
     {
-        public int InventoryId { get; set; } // primary key
-        public int BaseballBatsId { get; set; }
-        public BaseballBat BaseballBats { get; set; }
-        public int Quantity{ get; set; }
-        public int LocationId { get; set; }
+        public int id { get; set; } // primary key
+        public int batId { get; set; }
+        public Bat bats { get; set; }
+        public int quantity{ get; set; }
+        public int locationId { get; set; }
         public Location Location{get; set; }
     
 

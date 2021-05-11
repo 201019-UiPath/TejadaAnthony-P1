@@ -1,0 +1,18 @@
+html,
+body {
+    height: 100%;
+    width: auto;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    color: #54796d;
+}
+
+#addProductForm{
+
+    background-color: #54796d;
+    color: white;
+    padding: .75em;
+    font-family: 'Ubuntu', sans-serif;
+}

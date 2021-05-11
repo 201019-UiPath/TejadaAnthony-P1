@@ -9,11 +9,12 @@ namespace StoreAppDB.Models
     public class OrderItem
     {
         [Key]
-        public int Id { get; set; }
-        public int OrderId { get; set; }
+        public int id { get; set; }
+        public int orderId { get; set; }
         public Order Order { get; set; }
-        public int BaseballBatId { get; set; }
-        public BaseballBat BaseballBat { get; set; }
-        public int Quantity { get; set; }
+        public int batId { get; set; }
+        public Bat bat { get; set; }
+        public double price { get; set; }
+        public int quantity { get; set; }
     }
 }

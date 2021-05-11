@@ -7,10 +7,10 @@ namespace StoreAppDB.Interfaces
 {
     public interface IOrderItemRepoActions
     {
-        void AddOrderItem(OrderItem OrderItem);
-        void UpdateOrderItem(OrderItem OrderItem);
+        void AddOrderItem(OrderItem orderItem);
+        void UpdateOrderItem(OrderItem orderItem);
         OrderItem GetOrderItemByOrderId(int id);
         List<OrderItem> GetAllOrderItemsByOrderId(int id);
-        void DeleteOrderItem(OrderItem OrderItem);
+        void DeleteOrderItem(OrderItem orderItem);
     }
 }

@@ -8,138 +8,226 @@ using Microsoft.EntityFrameworkCore;
 
 namespace StoreAppDB
 {
-    public class DBRepo : IManagerRepoActions, ICustomerRepoActions, IBaseballBatRepoActions, ILocationRepoActions, IOrderRepoActions, IInventoryRepoActions, ICartRepoActions, ICartItemRepoActions, IOrderItemRepoActions
+    public class DBRepo : IUserRepoActions, IBatRepoActions, ILocationRepoActions, IOrderRepoActions, IInventoryRepoActions, ICartRepoActions, ICartItemRepoActions, IOrderItemRepoActions
     {
         private StoreAppContext context;
         public DBRepo(StoreAppContext context)
         {
             this.context = context;
         }
-        //BaseballBat
+     
 
-
-        public void AddBaseballBatIntoTableAsync(BaseballBat baseballbat)
-        {
-            context.BaseballBats.Add(baseballbat);
-            context.SaveChanges();
-
-        }
-        public BaseballBat GetBaseballBatById(int id)
-        {
-            return context.BaseballBats.SingleOrDefault(d => d.Id == id);
-        }
-        public List<BaseballBat> GetAllBaseballBats()
-        {
-            return context.BaseballBats.Select(x => x).ToList();
-        }
-
-        public void UpdateBaseballBat(BaseballBat bat)
-        {
-            context.BaseballBats.Update(bat);
+        // Bat Repo Methods Being Implemented
+        public void AddBat(Bat bat){
+            context.Bats.Add(bat);
             context.SaveChanges();
         }
 
-        public void DeleteBaseballBat(BaseballBat bat)
-        {
-            context.BaseballBats.Remove(bat);
+        public void UpdateBat(Bat bat){
+            context.Bats.Update(bat);
             context.SaveChanges();
         }
 
-        //Manager
-        public void AddManager(Manager manager)
-        {
-            context.Managers.Add(manager);
-            context.SaveChanges();
-        }
-        public List<Manager> GetAllManagers()
-        {
-            return context.Managers.Select(x => x).ToList();
-        }
-        public bool CheckIfManagerExists(string email, string password)
-        {
-            var result = context.Managers.Any(o => o.Email == email && o.password == password);
-
-            return result;
-        }
-
-        //Customer
-        public List<Customer> GetAllCustomers() {
-
-            return context.Customers.Select(x => x).ToList();
-        }
-        public bool CheckIfCustomerExists(string email, string password)
-        {
-            var result = context.Customers.Any(o => o.Email == email && o.Password == password);
-
-            return result;
-        }
-
-        public void AddCustomerIntoTable(Customer newCustomer)
-        {
-            context.Customers.Add(newCustomer);
+        public void DeleteBat(Bat bat){
+            context.Bats.Remove(bat);
             context.SaveChanges();
         }
 
-        public Customer GetCustomerByEmail(string email)
-        {
-            var result = context.Customers.Include("cart").SingleOrDefault(d => d.Email == email);
-
-            return result;
+        public Bat GetBatById(int id){
+            return context.Bats.SingleOrDefault(d => d.id == id);
         }
 
-        //locations
+        public Bat GetBatByName(string name){
+            return context.Bats.Single(x => x.product == name);
+        }
+        public List<Bat> GetAllBats(){
+            return context.Bats.Select(x => x).ToList();
+        }
+
+
+        //User Repo Methods Being Implemented
+        public void AddUser(User user)
+        {
+            context.Users.Add(user);
+            context.SaveChanges();
+        }
+
+        public void UpdateUser(User user)
+        {
+            context.Users.Update(user);
+            context.SaveChanges();
+        }
+
+        public User GetUserById(int id)
+        {
+            return context.Users.Single(x => x.id == id);
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return context.Users.Single(x => x.email == email);
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return context.Users.Select(x => x).ToList();
+        }
+
+        public void DeleteUser(User user)
+        {
+            context.Users.Remove(user);
+            context.SaveChanges();
+        }
+
+        //Locations Repo Methods Being Implemented
+        public void AddLocation(Location location)
+        {
+            context.Locations.Add(location);
+            context.SaveChanges();
+        }
+        public void UpdateLocation(Location location)
+        {
+            context.Locations.Update(location);
+            context.SaveChanges();
+        }
+        public Location GetLocationById(int id)
+        {
+            return context.Locations.Single(x => x.id == id);
+        }
+        public Location GetLocationByState(string state)
+        {
+            return context.Locations.Single(x => x.state == state);
+        }
         public List<Location> GetAllLocations()
         {
-            return context.Locations.Select(x => x).Include("Manager").ToList();
+            return context.Locations.Select(x => x).ToList();
         }
-
-        public Location GetLocationById(int locationId)
+        public void DeleteLocation(Location location)
         {
-            var result = context.Locations.SingleOrDefault(d => d.LocationId == locationId);
-
-            return result;
-        }
-        //inventory 
-        public void UpdateInventoryQuantity(Inventory inventory)
-        {
-            var result =context.Inventory.SingleOrDefault(a => a.InventoryId == inventory.InventoryId);
-            result.Quantity = inventory.Quantity;
+            context.Locations.Remove(location);
             context.SaveChanges();
-            
         }
-        public List<Inventory> GetInventoryByLocationId(int id)
+
+        //Inventory Repo Methods Being Implemented
+        public void AddInventoryItem(Inventory inventory)
         {
-            return context.Inventory.Select(x => x).Where(x => x.LocationId==id).Include("BaseballBats").ToList();
+            context.Inventories.Add(inventory);
+            context.SaveChanges();
         }
-        public Inventory GetInventoryRecordByInventoryNumber(int id)
+        public void UpdateInventoryItem(Inventory inventory)
         {
-            return context.Inventory.SingleOrDefault(f => f.InventoryId == id);
-             
+            context.Inventories.Update(inventory);
+            context.SaveChanges();
         }
+        public Inventory GetInventoryItemById(int id)
+        {
+            return context.Inventories.Single(x => x.id == id);
+        }
+        public List<Inventory> GetAllInventoryItemsById(int id)
+        {
+            return context.Inventories.Where(x => x.id == id).ToList();
+        }
+        public Inventory GetInventoryItemByLocationId(int id)
+        {
+            return context.Inventories.Single(x => x.locationId == id);
+        }
+        public List<Inventory> GetAllInventoryItemsByLocationId(int id)
+        {
+            return context.Inventories.Select(x => x).Where(x => x.locationId == id).ToList();
+        }
+        public void DeleteInventoryItem(Inventory inventory)
+        {
+            context.Inventories.Remove(inventory);
+            context.SaveChanges();
+        }
+        public Inventory GetItemByLocationIdBatId(int locationId, int batId)
+        {
+            return context.Inventories.Single(x => x.locationId == locationId && x.batId == batId);
+        }
+
+
         //orders
-        public List<Order> GetAllOrders()
-        {
-            return context.Orders.Select(x => x).ToList();
-        }
-        public Order GetOrderByDate(string date) 
-        {
-            return context.Orders.SingleOrDefault(x => x.OrderDate == date);
-        }
-        public void AddOrderToTable(Order order)
+        public void AddOrder(Order order)
         {
             context.Orders.Add(order);
             context.SaveChanges();
         }
 
-        public List<Order> GetOrdersByLocationId(int locationId)
+        public void UpdateOrder(Order order)
         {
-            return context.Orders.Select(x => x).Where(x => x.LocationId == locationId).ToList();
+            context.Orders.Update(order);
+            context.SaveChanges();
         }
 
-        public List<Order> GetOrdersByCustomerId(int cusId)
+        public Order GetOrderById(int id)
         {
-            return context.Orders.Select(x => x).Where(x => x.CustomerId == cusId).ToList();
+            return context.Orders.Single(x => x.id == id);
         }
+
+        public Order GetOrderByUserId(int id)
+        {
+            return context.Orders.Single(x => x.userId == id);
+        }
+
+        public Order GetOrderByLocationId(int id)
+        {
+            return context.Orders.Single(x => x.locationId == id);
+        }
+
+        public List<Order> GetAllOrdersByLocationId(int id)
+        {
+            return context.Orders.Where(x => x.locationId == id).ToList();
+        }
+
+        public List<Order> GetAllOrdersByUserId(int id)
+        {
+            return context.Orders.Where(x => x.userId == id).ToList();
+        }
+
+        public void DeleteOrder(Order order)
+        {
+            context.Orders.Remove(order);
+            context.SaveChanges();
+        }
+
+        public List<Order> GetAllOrdersByUserIdDateAsc(int id)
+        {
+            return context.Orders.Where(x => x.userId == id).OrderBy(x => x.orderDate).ToList();
+        }
+        public List<Order> GetAllOrdersByUserIdDateDesc(int id)
+        {
+            return context.Orders.Where(x => x.userId == id).OrderByDescending(x => x.orderDate).ToList();
+        }
+        public List<Order> GetAllOrdersByUserIdPriceAsc(int id)
+        {
+            return context.Orders.Where(x => x.userId == id).OrderBy(x => x.totalPrice).ToList();
+        }
+        public List<Order> GetAllOrdersByUserIdPriceDesc(int id)
+        {
+            return context.Orders.Where(x => x.userId == id).OrderByDescending(x => x.totalPrice).ToList();
+        }
+        public Order GetOrderByDate(DateTime dateTime)
+        {
+            return (Order)context.Orders.Single(x => x.orderDate == dateTime);
+        }
+
+        public List<Order> GetAllOrdersByLocationIdDateAsc(int id)
+        {
+            return context.Orders.Where(x => x.locationId == id).OrderBy(x => x.orderDate).ToList();
+        }
+        public List<Order> GetAllOrdersByLocationIdDateDesc(int id)
+        {
+            return context.Orders.Where(x => x.locationId == id).OrderByDescending(x => x.orderDate).ToList();
+        }
+        public List<Order> GetAllOrdersByLocationIdPriceAsc(int id)
+        {
+            return context.Orders.Where(x => x.locationId == id).OrderBy(x => x.totalPrice).ToList();
+        }
+        public List<Order> GetAllOrdersByLocationIdPriceDesc(int id)
+        {
+            return context.Orders.Where(x => x.locationId == id).OrderByDescending(x => x.totalPrice).ToList();
+        }
+
         //OrderItem
         public void AddOrderItem(OrderItem OrderItem)
         {
@@ -153,11 +241,11 @@ namespace StoreAppDB
         }
         public OrderItem GetOrderItemByOrderId(int id)
         {
-            return context.OrderItems.SingleOrDefault(x => x.OrderId == id);
+            return context.OrderItems.SingleOrDefault(x => x.id == id);
         }
         public List<OrderItem> GetAllOrderItemsByOrderId(int id)
         {
-            return context.OrderItems.Where(x => x.OrderId == id).ToList(); ;
+            return context.OrderItems.Where(x => x.orderId == id).ToList(); ;
         }
         public void DeleteOrderItem(OrderItem OrderItem)
         {
@@ -178,11 +266,11 @@ namespace StoreAppDB
         }
         public Cart GetCartById(int id)
         {
-            return context.Carts.SingleOrDefault(x => x.Id == id);
+            return context.Carts.Single(x => x.id == id);
         }
-        public Cart GetCartByCustomerId(int id)
+        public Cart GetCartByUserId(int id)
         {
-            return context.Carts.SingleOrDefault(x => x.CustomerId == id);
+            return context.Carts.SingleOrDefault(x => x.userId == id);
         }
         public void DeleteCart(Cart cart)
         {
@@ -203,15 +291,15 @@ namespace StoreAppDB
         }
         public CartItem GetCartItemById(int id)
         {
-            return context.CartItems.SingleOrDefault(x => x.Id == id);
+            return context.CartItems.SingleOrDefault(x => x.id == id);
         }
         public CartItem GetCartItemByCartId(int id)
         {
-            return context.CartItems.SingleOrDefault(x => x.CartId == id);
+            return context.CartItems.SingleOrDefault(x => x.cartId == id);
         }
         public List<CartItem> GetAllCartItemsByCartId(int id)
         {
-            return context.CartItems.Where(x => x.CartId == id).ToList();
+            return context.CartItems.Where(x => x.cartId == id).ToList();
         }
         public void DeleteCartItem(CartItem cart)
         {
@@ -219,5 +307,6 @@ namespace StoreAppDB
             context.SaveChanges();
         }
 
+     
     }
 }
